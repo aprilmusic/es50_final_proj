@@ -12,6 +12,9 @@ driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.get("https://www.youtube.com/watch?v=JIb4EGf5uFA")
 # driver.sendKeys(" ")
 # driver.sendKeys("f")
-while True:
+for i in range(60):
+    # for one minute
     driver.save_screenshot(f'images/science_center{time.time()}.png')
     time.sleep(1)
+
+driver.close()
