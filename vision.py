@@ -1,26 +1,28 @@
 # Import required libraries
 from PIL import Image
 import numpy as np
+# from skimage import io
+import matplotlib.pyplot as plt
+import cv2
 
-# Load the image file
-image = Image.open('image.jpg')
+background = cv2.imread('images/science_center1680972200.069715.png')
+twotrucks = cv2.imread('images/science_center1680284125.821405.png')
+print(background.shape)
 
-# Convert the image to grayscale for faster processing
-gray = image.convert('L')
+img = cv2.imread('images/science_center1680972203.6774762.png')
+img2 = cv2.imread('images/science_center1680972207.511832.png')
+# io.imshow(background[:, :, 3])
+# io.imshow(img)
+# io.show()
 
-# Convert the grayscale image to a numpy array
-img_array = np.array(gray, 'uint8')
+cv2.imshow('image', (background - twotrucks))
+# cv2.show()
+cv2.waitKey()
 
-# Initialize the Haar Cascade classifier for detecting faces
-haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+cv2.imshow('image', (background - img))
+# cv2.show()
+cv2.waitKey()
 
-# Detect faces in the image
-faces = haar_cascade.detectMultiScale(img_array, scaleFactor=1.1, minNeighbors=5)
-
-# Draw rectangles around the detected faces
-for (x, y, w, h) in faces:
-    draw_rect = ImageDraw.Draw(image)
-    draw_rect.rectangle([(x, y), (x+w, y+h)], outline=(0, 255, 0))
-
-# Display the image with the detected faces
-image.show()
+cv2.imshow('image', (background - img2))
+# cv2.show()
+cv2.waitKey()
