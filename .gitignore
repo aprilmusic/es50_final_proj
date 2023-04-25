@@ -1,0 +1,5 @@
+passwords.py
+hash/*
+images/*
+__pycache__*
+.DS_Store
