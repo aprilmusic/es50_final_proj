@@ -50,15 +50,15 @@ def get_people_pixels(img1, img2):
         if np.sum(labeled == i+1) < 900:
             continue
         labeled_1 = np.zeros(labeled.shape) + (labeled == i+1)
-        plt.imshow(labeled_1)
-        plt.show()
+        # plt.imshow(labeled_1)
+        # plt.show()
 
         people_components += labeled_1
 
     pixels = resize(people_components, (32, 52))
-    plt.imshow(pixels)
-    plt.show()
+    # plt.imshow(pixels)
+    # plt.show()
     return pixels
 
 
-get_people_pixels(img1, img2)
+# get_people_pixels(img1, img2)

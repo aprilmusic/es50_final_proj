@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 from seleniumwire.undetected_chromedriver.v2 import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
@@ -17,12 +18,13 @@ from passwords import GMAIL_USERNAME, GMAIL_PASSWORD
 
 if __name__ == "__main__":
 
-    options = {}
+    # options = {}
     chrome_options = ChromeOptions()
     chrome_options.add_argument('--user-data-dir=hash')
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--incognito")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--ignore-certificate-errors")
 
     browser = Chrome(seleniumwire_options=options, options=chrome_options)
     wait = WebDriverWait(browser, 10)
@@ -38,24 +40,37 @@ if __name__ == "__main__":
         (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
 
     # It will ask you for your 2 factor authentication on your phone here.
-    time.sleep(50)
+    time.sleep(30)
     browser.get('https://www.youtube.com/watch?v=JIb4EGf5uFA')
 
+    time.sleep(10)
     # Do initial truck processing
     initial_image_path = f'images/science_center{time.time()}.png'
     browser.save_screenshot(initial_image_path)
     truck_image = Image.open(initial_image_path)
-    # TODO FINISHT HIS
+    print("original size", truck_image.size)
+
+    # TODO FINISH THIS
 
     last_image_path = initial_image_path
     this_image_path = None
-    while True:
+    people_pixels_array = []
+    image_array = []
+    for i in range(10):
         this_image_path = f'images/science_center{time.time()}.png'
         browser.save_screenshot(this_image_path)
         img1 = Image.open(this_image_path)
+        image_array.append(img1)
+        print('this image size', img1.size)
         img2 = Image.open(last_image_path)
+        print('this image size', img2.size)
         people_pixels = get_people_pixels(img1, img2)
-        time.sleep(10)
+        people_pixels_array.append(people_pixels)
+        time.sleep(5)
         last_image_path = this_image_path
 
+    for i in range(5):
+        image_array[i].show()
+        plt.imshow(people_pixels_array[i])
+        plt.show()
     browser.close()
