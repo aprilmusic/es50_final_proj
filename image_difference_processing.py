@@ -2,6 +2,7 @@ import numpy as np
 from PIL import Image, ImageFilter, ImageOps
 from scipy.spatial import KDTree
 from scipy import ndimage
+from skimage.transform import resize
 import matplotlib.pyplot as plt
 
 # Load the two images
@@ -9,7 +10,7 @@ img1 = Image.open('images/science_center1682444448.872606.png')
 img2 = Image.open('images/science_center1682444452.3114848.png')
 
 
-def get_diff_locations(img1, img2):
+def get_people_pixels(img1, img2):
 
     # Convert the images to RGB format
     rgb1 = img1.convert('RGB')
@@ -38,21 +39,26 @@ def get_diff_locations(img1, img2):
     eroded_image = binary_image.filter(ImageFilter.MinFilter(size=3))
     dilated_image = eroded_image.filter(ImageFilter.MaxFilter(size=3))
 
-    # Save the grayscale image TODO DELETE THIS LATER
-    dilated_image.save('gray_image.jpg')
-    dilated_image.show()
+    dilated_image = np.asarray(dilated_image)
 
-    labeled, nr_objects = ndimage.label(np.asarray(dilated_image))
+    # We'll add people to this array
+    people_components = np.zeros(dilated_image.shape, dtype=np.float64)
+
+    labeled, nr_objects = ndimage.label(dilated_image)
     for i in range(nr_objects):
         # If they're really small, skip them
-        if np.sum(labeled == i+1) < 1100:
+        if np.sum(labeled == i+1) < 900:
             continue
         labeled_1 = np.zeros(labeled.shape) + (labeled == i+1)
         plt.imshow(labeled_1)
         plt.show()
-        # TODO CONVERT THESE TO PIXELS TO DISPLAY ON THE BOARD AND RETURN THOSE INSTEAD
 
-    return np.asarray(dilated_image)
+        people_components += labeled_1
+
+    pixels = resize(people_components, (32, 52))
+    plt.imshow(pixels)
+    plt.show()
+    return pixels
 
 
-get_diff_locations(img1, img2)
+get_people_pixels(img1, img2)

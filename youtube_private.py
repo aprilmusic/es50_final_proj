@@ -3,6 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 import time
+from PIL import Image, ImageFilter, ImageOps
+
+from image_difference_processing import get_people_pixels
 
 from passwords import GMAIL_USERNAME, GMAIL_PASSWORD
 
@@ -35,12 +38,24 @@ if __name__ == "__main__":
         (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
 
     # It will ask you for your 2 factor authentication on your phone here.
-
     time.sleep(50)
     browser.get('https://www.youtube.com/watch?v=JIb4EGf5uFA')
 
+    # Do initial truck processing
+    initial_image_path = f'images/science_center{time.time()}.png'
+    browser.save_screenshot(initial_image_path)
+    truck_image = Image.open(initial_image_path)
+    # TODO FINISHT HIS
+
+    last_image_path = initial_image_path
+    this_image_path = None
     while True:
-        browser.save_screenshot(f'images/science_center{time.time()}.png')
-        time.sleep(1)
+        this_image_path = f'images/science_center{time.time()}.png'
+        browser.save_screenshot(this_image_path)
+        img1 = Image.open(this_image_path)
+        img2 = Image.open(last_image_path)
+        people_pixels = get_people_pixels(img1, img2)
+        time.sleep(10)
+        last_image_path = this_image_path
 
     browser.close()
