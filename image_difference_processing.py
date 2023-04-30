@@ -5,12 +5,16 @@ from scipy import ndimage
 from skimage.transform import resize
 import matplotlib.pyplot as plt
 
+import serial
+
 # Load the two images
 img1 = Image.open('images/science_center1682444448.872606.png')
 img2 = Image.open('images/science_center1682444452.3114848.png')
+arduinoData = serial.Serial('/dev/cu.usbmodem101', 115200)
 
 
 def get_people_pixels(img1, img2):
+    ''' Returns pixels in form [x1, y1, x2, y2, ...] '''
 
     # Convert the images to RGB format
     rgb1 = img1.convert('RGB')
@@ -56,9 +60,16 @@ def get_people_pixels(img1, img2):
         people_components += labeled_1
 
     pixels = resize(people_components, (32, 52))
+    x, y = np.where(pixels > 0.1)
+    coordinates = []
+    for i in range(x.shape[0]):
+        arduinoData.write(y[i])
+        arduinoData.write(x[i])
+
     # plt.imshow(pixels)
     # plt.show()
+
     return pixels
 
 
-# get_people_pixels(img1, img2)
+get_people_pixels(img1, img2)

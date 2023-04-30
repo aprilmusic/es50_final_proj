@@ -6,6 +6,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 import time
 from PIL import Image, ImageFilter, ImageOps
 
+import serial
+
 from image_difference_processing import get_people_pixels
 
 from passwords import GMAIL_USERNAME, GMAIL_PASSWORD
@@ -18,7 +20,7 @@ from passwords import GMAIL_USERNAME, GMAIL_PASSWORD
 
 if __name__ == "__main__":
 
-    # options = {}
+    options = {'ca_cert': 'ca.crt'}
     chrome_options = ChromeOptions()
     chrome_options.add_argument('--user-data-dir=hash')
     chrome_options.add_argument("--disable-gpu")
@@ -50,11 +52,12 @@ if __name__ == "__main__":
     truck_image = Image.open(initial_image_path)
     print("original size", truck_image.size)
 
+    arduinoData = serial.Serial('/dev/cu.usbmodem101', 115200)
+
     # TODO FINISH THIS
 
     last_image_path = initial_image_path
     this_image_path = None
-    people_pixels_array = []
     image_array = []
     for i in range(10):
         this_image_path = f'images/science_center{time.time()}.png'
@@ -65,12 +68,11 @@ if __name__ == "__main__":
         img2 = Image.open(last_image_path)
         print('this image size', img2.size)
         people_pixels = get_people_pixels(img1, img2)
-        people_pixels_array.append(people_pixels)
+
+        # Send to arduino
+        arduinoData.write(bytearray(people_pixels))
+
         time.sleep(5)
         last_image_path = this_image_path
 
-    for i in range(5):
-        image_array[i].show()
-        plt.imshow(people_pixels_array[i])
-        plt.show()
     browser.close()
