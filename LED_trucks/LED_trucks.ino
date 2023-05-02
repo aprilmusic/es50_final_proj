@@ -112,24 +112,55 @@ void loop() {
   char rc;
   boolean recvInProgress = false;
   // matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 7));
-
-   // blue truck
-  matrix.drawLine(26, 16, 44, 19, matrix.Color333(1,2,7));
-  matrix.drawLine(26, 24, 44, 26, matrix.Color333(1,2,7));
-  matrix.drawLine(26, 16, 26, 24, matrix.Color333(1,2,7));
-  matrix.drawLine(44, 19, 44, 26, matrix.Color333(1,2,7));
+  uint16_t truck_color_1_matrix;
+  uint16_t truck_color_2_matrix;
+  uint16_t truck_color_3_matrix;
   
-  // yellow truck
-  matrix.drawLine(34, 9, 48, 12, matrix.Color333(7,7,0));
-  matrix.drawLine(34, 15, 48, 18, matrix.Color333(7,7,0));
-  matrix.drawLine(34, 9, 34, 15, matrix.Color333(7,7,0));
-  matrix.drawLine(48, 12, 48, 18, matrix.Color333(7,7,0));
+  // truck 1
+  if (truck_color_1 == "blue") {
+    truck_color_1_matrix = matrix.Color333(1,2,7);
+  } else if (truck_color_1 == "yellow") {
+    truck_color_1_matrix = matrix.Color333(7,7,0);
+  } else if (truck_color_1 == "red") {
+    truck_color_1_matrix = matrix.Color333(7,0,0);
+  } else {
+    truck_color_1_matrix = matrix.Color333(3,3,3);    
+  }
 
-// Red Truck
-  matrix.drawLine(39, 3, 49, 6, matrix.Color333(7,0,0));
-  matrix.drawLine(39, 7, 49, 10, matrix.Color333(7,0,0));
-  matrix.drawLine(39, 7, 39, 3, matrix.Color333(7,0,0));
-  matrix.drawLine(49, 6, 49, 10, matrix.Color333(7,0,0));
+  matrix.drawLine(26, 16, 44, 19, truck_color_1_matrix);
+  matrix.drawLine(26, 24, 44, 26, truck_color_1_matrix);
+  matrix.drawLine(26, 16, 26, 24, truck_color_1_matrix);
+  matrix.drawLine(44, 19, 44, 26, truck_color_1_matrix);
+  
+  // truck 2
+  if (truck_color_2 == "blue") {
+    truck_color_2_matrix = matrix.Color333(1,2,7);
+  } else if (truck_color_2 == "yellow") {
+    truck_color_2_matrix = matrix.Color333(7,7,0);
+  } else if (truck_color_2 == "red") {
+    truck_color_2_matrix = matrix.Color333(7,0,0);
+  } else {
+    truck_color_2_matrix = matrix.Color333(3,3,3);    
+  }
+  matrix.drawLine(34, 9, 48, 12, truck_color_2_matrix);
+  matrix.drawLine(34, 15, 48, 18, truck_color_2_matrix);
+  matrix.drawLine(34, 9, 34, 15, truck_color_2_matrix);
+  matrix.drawLine(48, 12, 48, 18, truck_color_2_matrix);
+
+// Truck 3
+  if (truck_color_3 == "blue") {
+    truck_color_3_matrix = matrix.Color333(1,2,7);
+  } else if (truck_color_3 == "yellow") {
+    truck_color_3_matrix = matrix.Color333(7,7,0);
+  } else if (truck_color_3 == "red") {
+    truck_color_3_matrix = matrix.Color333(7,0,0);
+  } else {
+    truck_color_3_matrix = matrix.Color333(3,3,3);    
+  }
+  matrix.drawLine(39, 3, 49, 6, truck_color_3_matrix);
+  matrix.drawLine(39, 7, 49, 10, truck_color_3_matrix);
+  matrix.drawLine(39, 7, 39, 3, truck_color_3_matrix);
+  matrix.drawLine(49, 6, 49, 10, truck_color_3_matrix);
 
 // White Line Separating Text
   matrix.drawLine(50, 0, 50, 32, matrix.Color333(3,3,3));
@@ -137,7 +168,6 @@ void loop() {
   while (!Serial.available()) {
      // If not available, a red dot
     // matrix.drawPixel(12, 12, matrix.Color333(7, 0, 0));
-
    }
   // int ndx = 0;
   // while (Serial.available() > 0) {
