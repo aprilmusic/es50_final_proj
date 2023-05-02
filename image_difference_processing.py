@@ -65,14 +65,17 @@ def get_people_pixels(img1, img2):
     x, y = np.where(pixels > 0.1)
     coordinates = []
     print(x, y)
+
     for i in range(x.shape[0]):
         time.sleep(1)
-        arduinoData.write(bytes(f'{y[i]:02d},{x[i]:02d}', 'utf-8'))
 
-    # plt.imshow(pixels)
+        arduinoData.write(bytes(f'{y[i]:02d},{x[i]:02d}', 'utf-8'))
+        print(f'{y[i]:02d},{x[i]:02d}')
+
     # plt.show()
 
     return pixels
 
 
-get_people_pixels(img1, img2)
+if __name__ == "__main__":
+    get_people_pixels(img1, img2)

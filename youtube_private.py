@@ -40,10 +40,11 @@ if __name__ == "__main__":
     #     (By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input'))).send_keys(GMAIL_PASSWORD)
     # wait.until(ec.presence_of_element_located(
     #     (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
+    # time.sleep(30)
 
     # It will ask you for your 2 factor authentication on your phone here.
-    time.sleep(30)
-    browser.get('https://youtu.be/-rb35xT5Q0I')
+
+    browser.get('https://www.youtube.com/watch?v=QBKk4TQi9KU')
 
     time.sleep(10)
     # Do initial truck processing
@@ -57,17 +58,22 @@ if __name__ == "__main__":
     last_image_path = initial_image_path
     this_image_path = None
     image_array = []
+
     for i in range(10):
-        this_image_path = f'images/science_center{time.time()}.png'
+        this_time = time.time()
+        this_image_path = f'images/science_center_{time.time()}.png'
         browser.save_screenshot(this_image_path)
         img1 = Image.open(this_image_path)
         image_array.append(img1)
         print('this image size', img1.size)
         img2 = Image.open(last_image_path)
         print('this image size', img2.size)
+        print(this_time)
         people_pixels = get_people_pixels(img1, img2)
+        plt.imshow(people_pixels)
+        plt.savefig(f'{this_time}_pixels.png')
 
-        time.sleep(5)
+        # time.sleep(5)
         last_image_path = this_image_path
 
     browser.close()

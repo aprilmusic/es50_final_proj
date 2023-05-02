@@ -120,7 +120,10 @@ void loop() {
    }
    // "%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d"
   matrix.drawPixel(16, 16, matrix.Color333(0, 0, 0));
+
   // sscanf(Serial.readString().c_str(), "%2d,%2d,%2d,%2d", &pixels[0], &pixels[1], &pixels[2], &pixels[3]);
+  // int a, b, c, d;
+  // sscanf(Serial.readString().c_str(), "%2d,%2d,%2d,%2d", &a, &b, &c, &d);
   // sscanf(Serial.readString().c_str(), "%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d", \ 
   //   &pixels[0], &pixels[1], &pixels[2], &pixels[3], &pixels[4], &pixels[5], &pixels[6], &pixels[7], &pixels[8], &pixels[9], \
   //   &pixels[10], &pixels[11], &pixels[12], &pixels[13], &pixels[14], &pixels[15], &pixels[16], &pixels[17], &pixels[18], &pixels[19], \
@@ -141,10 +144,6 @@ void loop() {
   //   PeopleBitMap[pixels[2*i]*64 + pixels[2*i+1]] = 0xFFFF;
   // }
   for (int i=0; i<num_people; i++) {
-    // Serial.print(atoi(pixels[i]));
-    // i = 0 -- 0, 1 (first person)
-    // i = 1 -- 2, 3 (second person)
-    // i = 2 -- 4, 5 (third person)
     matrix.drawPixel(pixels[2*i], pixels[2*i+1], matrix.Color333(0, 7, 0));
     delay(100);
   }
