@@ -29,21 +29,21 @@ if __name__ == "__main__":
     chrome_options.add_argument("--ignore-certificate-errors")
 
     browser = Chrome(seleniumwire_options=options, options=chrome_options)
-    wait = WebDriverWait(browser, 10)
-    browser.get('https://gmail.com')
-    wait.until(ec.presence_of_element_located(
-        (By.XPATH, '//*[@id="identifierId"]'))).send_keys(GMAIL_USERNAME)
-    wait.until(ec.presence_of_element_located(
-        (By.XPATH, '//*[@id="identifierNext"]/div/button'))).click()
-    time.sleep(5)
-    wait.until(ec.presence_of_element_located(
-        (By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input'))).send_keys(GMAIL_PASSWORD)
-    wait.until(ec.presence_of_element_located(
-        (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
+    # wait = WebDriverWait(browser, 10)
+    # browser.get('https://gmail.com')
+    # wait.until(ec.presence_of_element_located(
+    #     (By.XPATH, '//*[@id="identifierId"]'))).send_keys(GMAIL_USERNAME)
+    # wait.until(ec.presence_of_element_located(
+    #     (By.XPATH, '//*[@id="identifierNext"]/div/button'))).click()
+    # time.sleep(5)
+    # wait.until(ec.presence_of_element_located(
+    #     (By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input'))).send_keys(GMAIL_PASSWORD)
+    # wait.until(ec.presence_of_element_located(
+    #     (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
 
     # It will ask you for your 2 factor authentication on your phone here.
     time.sleep(30)
-    browser.get('https://www.youtube.com/watch?v=JIb4EGf5uFA')
+    browser.get('https://youtu.be/-rb35xT5Q0I')
 
     time.sleep(10)
     # Do initial truck processing
@@ -51,8 +51,6 @@ if __name__ == "__main__":
     browser.save_screenshot(initial_image_path)
     truck_image = Image.open(initial_image_path)
     print("original size", truck_image.size)
-
-    arduinoData = serial.Serial('/dev/cu.usbmodem101', 115200)
 
     # TODO FINISH THIS
 
@@ -68,9 +66,6 @@ if __name__ == "__main__":
         img2 = Image.open(last_image_path)
         print('this image size', img2.size)
         people_pixels = get_people_pixels(img1, img2)
-
-        # Send to arduino
-        arduinoData.write(bytearray(people_pixels))
 
         time.sleep(5)
         last_image_path = this_image_path

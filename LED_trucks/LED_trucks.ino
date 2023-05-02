@@ -25,21 +25,21 @@
 #define D   A3
 
 RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
-char pixels[32];
+int pixels[32] = {0};
+int num_people;
 
 void setup() {
+  Serial.begin(115200);
 
   matrix.begin();
-  Serial.begin(115200);
+  num_people = 0;
+  
 
   // fill the screen with 'black'
   matrix.fillScreen(matrix.Color333(0, 0, 0));
+  // matrix.drawPixel(16, 16, matrix.Color333(0, 7, 0));
 
-  for (int i=0; i<sizeof(pixels); i++) {
-    // Serial.print(atoi(pixels[i]));
-    matrix.drawPixel(atoi(pixels[i]), atoi(pixels[i+1]), matrix.Color333(0, 7, 0));
-    i += 1;
-  }
+  
   // draw a pixel in solid white
   //matrix.drawPixel(0, 0, matrix.Color333(7, 7, 7));
   //delay(500);
@@ -66,7 +66,6 @@ void setup() {
  // delay(500);
 
   
-
   //matrix.drawRect(28, 15, 20, 9, matrix.Color333(7,7,0));
   //matrix.drawRect(40, 9, 12, 9, matrix.Color333(0,0,7));
   
@@ -87,23 +86,21 @@ void setup() {
   matrix.setTextSize(1);     // size 1 == 8 pixels high
   matrix.setTextWrap(false); // Don't wrap at end of line - will do ourselves
 
-  matrix.setCursor(52, 0);    // start at top left, with 8 pixel of spacing
+  matrix.setCursor(52, 0);    // start at top right, with 12 pixels of spacing from the right
   uint8_t w = 0;
   char *str = "20";
   for (w=0; w<8; w++) {
     matrix.setTextColor(Wheel(w));
     matrix.print(str[w]);
   }
-  matrix.setCursor(2, 8);    // next line
-  for (w=8; w<18; w++) {
-    matrix.setTextColor(Wheel(w));
-    matrix.print(str[w]);
-  }
-  matrix.println();
-  //matrix.setTextColor(matrix.Color333(4,4,4));
-  //matrix.println("Industries");
-  matrix.setTextColor(matrix.Color333(7,7,7));
-  matrix.println("");
+  // matrix.setCursor(2, 8);    // next line
+  // for (w=8; w<18; w++) {
+  //   matrix.setTextColor(Wheel(w));
+  //   matrix.print(str[w]);
+  // }
+  // matrix.println();
+  // matrix.setTextColor(matrix.Color333(7,7,7));
+  // matrix.println("");
 
   // print each letter with a rainbow color
   
@@ -111,12 +108,47 @@ void setup() {
 }
 
 void loop() {
-  int i;
-  while (Serial.available() > 0) {
-     i = Serial.readBytesUntil('\n', pixels, sizeof(pixels));
+  int tuple[2];
+
+  matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 7));
+
+  while (!Serial.available()) {
+     // If not available, a red dot
+    matrix.drawPixel(12, 12, matrix.Color333(7, 0, 0));
     //  values[i] = '\0';                 // Now it's a string, so
     //  Serial.println(pixels);           // ...show it
    }
+   // "%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d"
+  matrix.drawPixel(16, 16, matrix.Color333(0, 0, 0));
+  // sscanf(Serial.readString().c_str(), "%2d,%2d,%2d,%2d", &pixels[0], &pixels[1], &pixels[2], &pixels[3]);
+  // sscanf(Serial.readString().c_str(), "%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d,%2d", \ 
+  //   &pixels[0], &pixels[1], &pixels[2], &pixels[3], &pixels[4], &pixels[5], &pixels[6], &pixels[7], &pixels[8], &pixels[9], \
+  //   &pixels[10], &pixels[11], &pixels[12], &pixels[13], &pixels[14], &pixels[15], &pixels[16], &pixels[17], &pixels[18], &pixels[19], \
+  //   &pixels[20], &pixels[21], &pixels[22], &pixels[23], &pixels[24], &pixels[25], &pixels[26], &pixels[27], &pixels[28], &pixels[29]);
+    
+  sscanf(Serial.readString().c_str(), "%2d,%2d,", &tuple[0], &tuple[1]);
+
+  pixels[num_people * 2] = tuple[0];  
+  pixels[num_people * 2+1] = tuple[1];
+  num_people += 1;
+  
+  // matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 0));
+  // If available, a green dot
+  matrix.drawPixel(12, 12, matrix.Color333(0, 7, 0));
+  // delay(10000);
+
+  // for (int i=0; i<num_people; i++){
+  //   PeopleBitMap[pixels[2*i]*64 + pixels[2*i+1]] = 0xFFFF;
+  // }
+  for (int i=0; i<num_people; i++) {
+    // Serial.print(atoi(pixels[i]));
+    // i = 0 -- 0, 1 (first person)
+    // i = 1 -- 2, 3 (second person)
+    // i = 2 -- 4, 5 (third person)
+    matrix.drawPixel(pixels[2*i], pixels[2*i+1], matrix.Color333(0, 7, 0));
+    delay(100);
+  }
+  
 }
 
 

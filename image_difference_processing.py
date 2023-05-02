@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 
 import serial
 
+import time
+
 # Load the two images
 img1 = Image.open('images/science_center1682444448.872606.png')
 img2 = Image.open('images/science_center1682444452.3114848.png')
@@ -62,9 +64,10 @@ def get_people_pixels(img1, img2):
     pixels = resize(people_components, (32, 52))
     x, y = np.where(pixels > 0.1)
     coordinates = []
+    print(x, y)
     for i in range(x.shape[0]):
-        arduinoData.write(y[i])
-        arduinoData.write(x[i])
+        time.sleep(1)
+        arduinoData.write(bytes(f'{y[i]:02d},{x[i]:02d}', 'utf-8'))
 
     # plt.imshow(pixels)
     # plt.show()
