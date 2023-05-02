@@ -9,7 +9,7 @@ import serial
 
 import time
 
-arduinoData = serial.Serial('/dev/cu.usbmodem101', 115200)
+arduinoData = serial.Serial('/dev/cu.usbmodem14101', 115200)
 # for i in range(3):
 time.sleep(2)
 
@@ -21,6 +21,20 @@ time.sleep(1)
 arduinoData.write(bytes('15,30', 'utf-8'))
 time.sleep(1)
 
-
 arduinoData.write(bytes('3,6', 'utf-8'))
+time.sleep(1)
+
+arduinoData.write(bytes('48,25', 'utf-8'))
+time.sleep(1)
+
+arduinoData.write(bytes('49,24', 'utf-8'))
+time.sleep(1)
+
+arduinoData.write(bytes('49,4', 'utf-8'))
+time.sleep(1)
+
+arduinoData.write(bytes('49,12', 'utf-8'))
+time.sleep(1)
+
+arduinoData.write(bytes('49,8', 'utf-8'))
 time.sleep(1)

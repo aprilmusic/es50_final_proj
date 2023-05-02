@@ -39,6 +39,11 @@ char endMarker = ',';
 
 char integer[4];
 
+int numbers[3];
+// numbers[0] = "20";
+// numbers[1] = "20";
+// numbers[2] = "20";
+
 byte newData = false;
 
 void setup() {
@@ -56,27 +61,6 @@ void setup() {
 
 
   //matrix.drawPixel()
-  
-  
-  // draw some text!
-   // draw some text!
-  matrix.setTextSize(1);     // size 1 == 8 pixels high
-  matrix.setTextWrap(false); // Don't wrap at end of line - will do ourselves
-
-// Red Text
-  matrix.setCursor(52, 1);    // start at top left, with 8 pixel of spacing
-  matrix.setTextColor(matrix.Color333(7,0,0));
-  matrix.println("20");
-
-// Yellow Text
-  matrix.setCursor(52, 12);    // start at top left, with 8 pixel of spacing
-  matrix.setTextColor(matrix.Color333(7,7,0));
-  matrix.println("20");
-
-// Blue Text
-  matrix.setCursor(52, 23);    // start at top left, with 8 pixel of spacing
-  matrix.setTextColor(matrix.Color333(1,2,7));
-  matrix.println("20");
 
 // White Lines For Background
 matrix.drawLine(0, 12, 30, 32, matrix.Color333(3,3,3));
@@ -133,6 +117,32 @@ void loop() {
 
 // White Line Separating Text
   matrix.drawLine(50, 0, 50, 32, matrix.Color333(3,3,3));
+
+  // draw some text!
+  // draw some text!
+  matrix.setTextSize(1);     // size 1 == 8 pixels high
+  matrix.setTextWrap(false); // Don't wrap at end of line - will do ourselves
+
+// Red Text
+  matrix.fillRect(52, 0, 15, 32, matrix.Color333(0,0,0));
+  matrix.setCursor(52, 1);    // start at top left, with 8 pixel of spacing
+  matrix.setTextColor(matrix.Color333(7,0,0));
+  matrix.println(numbers[0]);
+
+
+
+// Yellow Text
+  matrix.setCursor(52, 12);    // start at top left, with 8 pixel of spacing
+  matrix.setTextColor(matrix.Color333(7,7,0));
+  matrix.println(numbers[1]);
+  
+
+
+// Blue Text
+  matrix.setCursor(52, 23);    // start at top left, with 8 pixel of spacing
+  matrix.setTextColor(matrix.Color333(1,2,7));
+  matrix.println(numbers[2]);
+ 
 
   while (!Serial.available()) {
      // If not available, a red dot
@@ -238,6 +248,24 @@ void loop() {
     // }
     for (int i=0; i<num_people; i++) {
       matrix.drawPixel(pixels[2*i], pixels[2*i+1], matrix.Color333(0, 7, 0));
+
+            // Define Boundaries
+      int x = 25;
+      int y1 = 9;
+      int y2 = 18;
+
+      // Define Time Increments
+      int time_inc = 1;
+
+      if (pixels[2*i] < x) {
+        continue;
+      } else if (pixels[2*i + 1] < y1 ) {
+        numbers[0] += time_inc;
+      } else if (pixels[2*i + 1] < y2 ) {
+        numbers[1] += time_inc;
+      } else if (pixels[2*i + 1] > y2){
+        numbers[2] += time_inc;
+      }
     }
 
 
