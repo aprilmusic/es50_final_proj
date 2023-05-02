@@ -54,61 +54,6 @@ void setup() {
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   // matrix.drawPixel(16, 16, matrix.Color333(0, 7, 0));
 
-  
-  // draw a pixel in solid white
-  //matrix.drawPixel(0, 0, matrix.Color333(7, 7, 7));
-  //delay(500);
-
-  // fix the screen with green
-  //matrix.fillRect(0, 0, matrix.width(), matrix.height(), matrix.Color333(0, 7, 0));
-  //delay(500);
-
-  // draw a box in yellow
-  //matrix.drawRect(0, 0, matrix.width(), matrix.height(), matrix.Color333(7, 7, 0));
-  //delay(500);
-
-  // draw an 'X' in red
-  //matrix.drawLine(0, 0, matrix.width()-1, matrix.height()-1, matrix.Color333(7, 0, 0));
-  //matrix.drawLine(matrix.width()-1, 0, 0, matrix.height()-1, matrix.Color333(7, 0, 0));
-  //delay(500);
-
-  // draw a blue circle
-  //matrix.drawCircle(10, 10, 10, matrix.Color333(0, 0, 7));
-  //delay(500);
-
-  // fill a violet circle
- // matrix.fillCircle(40, 21, 10, matrix.Color333(7, 0, 7));
- // delay(500);
-
-  
-  //matrix.drawRect(28, 15, 20, 9, matrix.Color333(7,7,0));
-  //matrix.drawRect(40, 9, 12, 9, matrix.Color333(0,0,7));
-  
-  // blue truck
-  matrix.drawLine(26, 16, 44, 19, matrix.Color333(1,2,7));
-  matrix.drawLine(26, 24, 44, 26, matrix.Color333(1,2,7));
-  matrix.drawLine(26, 16, 26, 24, matrix.Color333(1,2,7));
-  matrix.drawLine(44, 19, 44, 26, matrix.Color333(1,2,7));
-
-  // matrix.setCursor(28, 17);
-  // matrix.setTextSize(0.5);
-  // matrix.setTextColor(matrix.Color333(1, 2, 7));
-  // matrix.print('CB');
-  
-  // yellow truck
-  matrix.drawLine(34, 9, 48, 12, matrix.Color333(7,7,0));
-  matrix.drawLine(34, 15, 48, 18, matrix.Color333(7,7,0));
-  matrix.drawLine(34, 9, 34, 15, matrix.Color333(7,7,0));
-  matrix.drawLine(48, 12, 48, 18, matrix.Color333(7,7,0));
-
-// Red Truck
-  matrix.drawLine(39, 3, 49, 6, matrix.Color333(7,0,0));
-  matrix.drawLine(39, 7, 49, 10, matrix.Color333(7,0,0));
-  matrix.drawLine(39, 7, 39, 3, matrix.Color333(7,0,0));
-  matrix.drawLine(49, 6, 49, 10, matrix.Color333(7,0,0));
-
-// White Line Separating Text
-  matrix.drawLine(50, 0, 50, 32, matrix.Color333(3,3,3));
 
   //matrix.drawPixel()
   
@@ -138,11 +83,11 @@ matrix.drawLine(0, 12, 30, 32, matrix.Color333(3,3,3));
 matrix.drawLine(0, 17, 13, 32, matrix.Color333(3,3,3));
 
 // fill circle
-matrix.fillCircle(1, 31, 2, matrix.Color333(0, 7, 0));
+matrix.fillCircle(1, 31, 2, matrix.Color333(2, 7, 2));
 matrix.fillCircle(1, 29, 2, matrix.Color333(0, 7, 0));
-matrix.fillCircle(1, 26, 2, matrix.Color333(0, 7, 0));
+matrix.fillCircle(1, 26, 2, matrix.Color333(1, 7, 1));
 matrix.fillCircle(3, 31, 2, matrix.Color333(0, 7, 0));
-matrix.fillCircle(0, 24, 1, matrix.Color333(0, 7, 0));
+matrix.fillCircle(0, 24, 1, matrix.Color333(4, 7, 4));
 matrix.fillCircle(0, 23, 2, matrix.Color333(0, 7, 0));
   }
   // matrix.setCursor(2, 8);    // next line
@@ -157,7 +102,7 @@ matrix.fillCircle(0, 23, 2, matrix.Color333(0, 7, 0));
   // print each letter with a rainbow color
   
   // whew!
-}
+
 
 
 
@@ -168,13 +113,32 @@ void loop() {
   boolean recvInProgress = false;
   // matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 7));
 
+   // blue truck
+  matrix.drawLine(26, 16, 44, 19, matrix.Color333(1,2,7));
+  matrix.drawLine(26, 24, 44, 26, matrix.Color333(1,2,7));
+  matrix.drawLine(26, 16, 26, 24, matrix.Color333(1,2,7));
+  matrix.drawLine(44, 19, 44, 26, matrix.Color333(1,2,7));
+  
+  // yellow truck
+  matrix.drawLine(34, 9, 48, 12, matrix.Color333(7,7,0));
+  matrix.drawLine(34, 15, 48, 18, matrix.Color333(7,7,0));
+  matrix.drawLine(34, 9, 34, 15, matrix.Color333(7,7,0));
+  matrix.drawLine(48, 12, 48, 18, matrix.Color333(7,7,0));
+
+// Red Truck
+  matrix.drawLine(39, 3, 49, 6, matrix.Color333(7,0,0));
+  matrix.drawLine(39, 7, 49, 10, matrix.Color333(7,0,0));
+  matrix.drawLine(39, 7, 39, 3, matrix.Color333(7,0,0));
+  matrix.drawLine(49, 6, 49, 10, matrix.Color333(7,0,0));
+
+// White Line Separating Text
+  matrix.drawLine(50, 0, 50, 32, matrix.Color333(3,3,3));
+
   while (!Serial.available()) {
      // If not available, a red dot
-    matrix.drawPixel(12, 12, matrix.Color333(7, 0, 0));
+    // matrix.drawPixel(12, 12, matrix.Color333(7, 0, 0));
 
    }
-  matrix.drawPixel(16, 16, matrix.Color333(0, 0, 0));
-
   // int ndx = 0;
   // while (Serial.available() > 0) {
   //   rc = Serial.read();
@@ -231,8 +195,6 @@ void loop() {
   //   &pixels[10], &pixels[11], &pixels[12], &pixels[13], &pixels[14], &pixels[15], &pixels[16], &pixels[17], &pixels[18], &pixels[19], \
   //   &pixels[20], &pixels[21], &pixels[22], &pixels[23], &pixels[24], &pixels[25], &pixels[26], &pixels[27], &pixels[28], &pixels[29]);
 
-  delay(100);
-
   
 
   // BELOW IS WHAT WE ACTUALLY USE
@@ -240,7 +202,6 @@ void loop() {
   String python_output = Serial.readString();
   if (python_output == "new") {
     
-    matrix.drawPixel(6, 6, matrix.Color333(0, 7, 0));
     for (int i=0; i<num_people; i++) {
       matrix.drawPixel(pixels[2*i], pixels[2*i+1], matrix.Color333(0, 0, 0));
       delay(100);
@@ -277,8 +238,9 @@ void loop() {
     // }
     for (int i=0; i<num_people; i++) {
       matrix.drawPixel(pixels[2*i], pixels[2*i+1], matrix.Color333(0, 7, 0));
-      delay(100);
     }
+
+
 
   }
 
