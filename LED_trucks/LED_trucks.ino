@@ -69,29 +69,66 @@ void setup() {
   //matrix.drawRect(28, 15, 20, 9, matrix.Color333(7,7,0));
   //matrix.drawRect(40, 9, 12, 9, matrix.Color333(0,0,7));
   
-  matrix.drawLine(28, 15, 48, 19, matrix.Color333(7,7,0));
-  matrix.drawLine(28, 24, 48, 28, matrix.Color333(7,7,0));
-  matrix.drawLine(28, 15, 28, 24, matrix.Color333(7,7,0));
-  matrix.drawLine(48, 19, 48, 28, matrix.Color333(7,7,0));
+  // blue truck
+  matrix.drawLine(26, 16, 44, 19, matrix.Color333(1,2,7));
+  matrix.drawLine(26, 24, 44, 26, matrix.Color333(1,2,7));
+  matrix.drawLine(26, 16, 26, 24, matrix.Color333(1,2,7));
+  matrix.drawLine(44, 19, 44, 26, matrix.Color333(1,2,7));
+
+  // matrix.setCursor(28, 17);
+  // matrix.setTextSize(0.5);
+  // matrix.setTextColor(matrix.Color333(1, 2, 7));
+  // matrix.print('CB');
   
-  matrix.drawLine(34, 9, 48, 12, matrix.Color333(0,0,7));
-  matrix.drawLine(34, 15, 48, 18, matrix.Color333(0,0,7));
-  matrix.drawLine(34, 9, 34, 15, matrix.Color333(0,0,7));
-  matrix.drawLine(48, 12, 48, 18, matrix.Color333(0,0,7));
+  // yellow truck
+  matrix.drawLine(34, 9, 48, 12, matrix.Color333(7,7,0));
+  matrix.drawLine(34, 15, 48, 18, matrix.Color333(7,7,0));
+  matrix.drawLine(34, 9, 34, 15, matrix.Color333(7,7,0));
+  matrix.drawLine(48, 12, 48, 18, matrix.Color333(7,7,0));
+
+// Red Truck
+  matrix.drawLine(39, 3, 49, 6, matrix.Color333(7,0,0));
+  matrix.drawLine(39, 7, 49, 10, matrix.Color333(7,0,0));
+  matrix.drawLine(39, 7, 39, 3, matrix.Color333(7,0,0));
+  matrix.drawLine(49, 6, 49, 10, matrix.Color333(7,0,0));
+
+// White Line Separating Text
+  matrix.drawLine(50, 0, 50, 32, matrix.Color333(3,3,3));
 
   //matrix.drawPixel()
   
   
   // draw some text!
+   // draw some text!
   matrix.setTextSize(1);     // size 1 == 8 pixels high
   matrix.setTextWrap(false); // Don't wrap at end of line - will do ourselves
 
-  matrix.setCursor(52, 0);    // start at top right, with 12 pixels of spacing from the right
-  uint8_t w = 0;
-  char *str = "20";
-  for (w=0; w<8; w++) {
-    matrix.setTextColor(Wheel(w));
-    matrix.print(str[w]);
+// Red Text
+  matrix.setCursor(52, 1);    // start at top left, with 8 pixel of spacing
+  matrix.setTextColor(matrix.Color333(7,0,0));
+  matrix.println("20");
+
+// Yellow Text
+  matrix.setCursor(52, 12);    // start at top left, with 8 pixel of spacing
+  matrix.setTextColor(matrix.Color333(7,7,0));
+  matrix.println("20");
+
+// Blue Text
+  matrix.setCursor(52, 23);    // start at top left, with 8 pixel of spacing
+  matrix.setTextColor(matrix.Color333(1,2,7));
+  matrix.println("20");
+
+// White Lines For Background
+matrix.drawLine(0, 12, 30, 32, matrix.Color333(3,3,3));
+matrix.drawLine(0, 17, 13, 32, matrix.Color333(3,3,3));
+
+// fill circle
+matrix.fillCircle(1, 31, 2, matrix.Color333(0, 7, 0));
+matrix.fillCircle(1, 29, 2, matrix.Color333(0, 7, 0));
+matrix.fillCircle(1, 26, 2, matrix.Color333(0, 7, 0));
+matrix.fillCircle(3, 31, 2, matrix.Color333(0, 7, 0));
+matrix.fillCircle(0, 24, 1, matrix.Color333(0, 7, 0));
+matrix.fillCircle(0, 23, 2, matrix.Color333(0, 7, 0));
   }
   // matrix.setCursor(2, 8);    // next line
   // for (w=8; w<18; w++) {
