@@ -16,7 +16,7 @@ time.sleep(2)
 # arduinoData.write(bytes(
 # '10,10,12,12,14,14,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00', 'utf-8'))
 # arduinoData.write(bytes("605040302010", 'utf-8'))
-arduinoData.write(bytes(';10,;12,;14,;16,;18,;20,', 'utf-8'))
+# arduinoData.write(bytes(';10,;12,;14,;16,;18,;20,', 'utf-8'))
 
 # time.sleep(1)
 
@@ -31,7 +31,7 @@ arduinoData.write(bytes(';10,;12,;14,;16,;18,;20,', 'utf-8'))
 
 # arduinoData.write(bytes('3,6', 'utf-8'))
 # time.sleep(1)
-arduinoData.write(bytes('3,6', 'utf-8'))
+# arduinoData.write(bytes('03,06', 'utf-8'))
 time.sleep(1)
 
 arduinoData.write(bytes('48,25', 'utf-8'))
@@ -40,11 +40,11 @@ time.sleep(1)
 arduinoData.write(bytes('49,24', 'utf-8'))
 time.sleep(1)
 
-arduinoData.write(bytes('49,4', 'utf-8'))
+arduinoData.write(bytes('49,04', 'utf-8'))
 time.sleep(1)
 
 arduinoData.write(bytes('49,12', 'utf-8'))
 time.sleep(1)
 
-arduinoData.write(bytes('49,8', 'utf-8'))
+arduinoData.write(bytes('49,08', 'utf-8'))
 time.sleep(1)

@@ -25,12 +25,23 @@
 #define D   A3
 
 RGBmatrixPanel matrix(A, B, C, D, CLK, LAT, OE, false, 64);
-int pixels[32];
+int pixels[64];
 int num_people;
 int pixel_index;
-String truck_color_1;
-String truck_color_2;
-String truck_color_3;
+char truck_color_1;
+char truck_color_2;
+char truck_color_3;
+
+uint16_t truck_color_1_matrix;
+uint16_t truck_color_2_matrix;
+uint16_t truck_color_3_matrix;
+
+int x_boundary = 25;
+int y1_boundary = 9;
+int y2_boundary = 18;
+
+// Define Time Increments
+int time_inc = 2;
 
 
 
@@ -89,6 +100,14 @@ matrix.fillCircle(0, 23, 2, matrix.Color333(0, 7, 0));
 
 
 
+void update_numbers() {
+  for (int i=0; i < num_people; i++){
+  
+            // Define Boundaries
+      
+}
+}
+
 
 
 void loop() {
@@ -96,20 +115,19 @@ void loop() {
   char rc;
   boolean recvInProgress = false;
   // matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 7));
-  uint16_t truck_color_1_matrix;
-  uint16_t truck_color_2_matrix;
-  uint16_t truck_color_3_matrix;
-  
+
   // truck 1
-  if (truck_color_1 == "blue") {
+  if (truck_color_1 == 'b') {
     truck_color_1_matrix = matrix.Color333(1,2,7);
-  } else if (truck_color_1 == "yellow") {
+  } else if (truck_color_1 == 'y') {
     truck_color_1_matrix = matrix.Color333(7,7,0);
-  } else if (truck_color_1 == "red") {
+  } else if (truck_color_1 == 'r') {
     truck_color_1_matrix = matrix.Color333(7,0,0);
   } else {
     truck_color_1_matrix = matrix.Color333(3,3,3);    
   }
+
+  matrix.println(truck_color_1);
 
   matrix.drawLine(26, 16, 44, 19, truck_color_1_matrix);
   matrix.drawLine(26, 24, 44, 26, truck_color_1_matrix);
@@ -117,11 +135,11 @@ void loop() {
   matrix.drawLine(44, 19, 44, 26, truck_color_1_matrix);
   
   // truck 2
-  if (truck_color_2 == "blue") {
+  if (truck_color_2 == 'b') {
     truck_color_2_matrix = matrix.Color333(1,2,7);
-  } else if (truck_color_2 == "yellow") {
+  } else if (truck_color_2 == 'y') {
     truck_color_2_matrix = matrix.Color333(7,7,0);
-  } else if (truck_color_2 == "red") {
+  } else if (truck_color_2 == 'r') {
     truck_color_2_matrix = matrix.Color333(7,0,0);
   } else {
     truck_color_2_matrix = matrix.Color333(3,3,3);    
@@ -132,11 +150,11 @@ void loop() {
   matrix.drawLine(48, 12, 48, 18, truck_color_2_matrix);
 
 // Truck 3
-  if (truck_color_3 == "blue") {
+  if (truck_color_3 == 'b') {
     truck_color_3_matrix = matrix.Color333(1,2,7);
-  } else if (truck_color_3 == "yellow") {
+  } else if (truck_color_3 == 'y') {
     truck_color_3_matrix = matrix.Color333(7,7,0);
-  } else if (truck_color_3 == "red") {
+  } else if (truck_color_3 == 'r') {
     truck_color_3_matrix = matrix.Color333(7,0,0);
   } else {
     truck_color_3_matrix = matrix.Color333(3,3,3);    
@@ -154,24 +172,23 @@ void loop() {
   matrix.setTextSize(1);     // size 1 == 8 pixels high
   matrix.setTextWrap(false); // Don't wrap at end of line - will do ourselves
 
-// Red Text
+
+// Truck 1 Text
   matrix.fillRect(52, 0, 15, 32, matrix.Color333(0,0,0));
   matrix.setCursor(52, 1);    // start at top left, with 8 pixel of spacing
-  matrix.setTextColor(matrix.Color333(7,0,0));
+  matrix.setTextColor(truck_color_1_matrix);
   matrix.println(numbers[0]);
 
 
-
-// Yellow Text
+// Truck 2 Text
   matrix.setCursor(52, 12);    // start at top left, with 8 pixel of spacing
-  matrix.setTextColor(matrix.Color333(7,7,0));
+  matrix.setTextColor(truck_color_2_matrix);
   matrix.println(numbers[1]);
   
 
-
-// Blue Text
+// Truck 3 Text
   matrix.setCursor(52, 23);    // start at top left, with 8 pixel of spacing
-  matrix.setTextColor(matrix.Color333(1,2,7));
+  matrix.setTextColor(truck_color_3_matrix);
   matrix.println(numbers[2]);
  
 
@@ -241,81 +258,59 @@ void loop() {
 
   String python_output = Serial.readString();
   if (python_output == "new") {
-    
+    // A new frame is being captured, reset pixel and wait time values
     for (int i=0; i<num_people; i++) {
       matrix.drawPixel(pixels[2*i], pixels[2*i+1], matrix.Color333(0, 0, 0));
-      delay(100);
     }
-    
-    matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 0));
+    numbers[0] = 0;
+    numbers[1] = 0;
+    numbers[2] = 0;
+    matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 7));
     
     num_people = 0;
     
-  } else if (python_output.substring(0, 5) == "truck") {
-    if (python_output.substring(5, 6) == "1"){
-      truck_color_1 = python_output.substring(6, python_output.length());
-    } else if (python_output.substring(5, 6) == "2"){
-      truck_color_2 = python_output.substring(6, python_output.length());
-    } else if (python_output.substring(5, 6) == "3"){
-      truck_color_3 = python_output.substring(6, python_output.length());
+  } else if (python_output.c_str()[0] == 't') {
+    // Truck colors are communicated here
+    matrix.drawPixel(0,0,matrix.Color333(7,0,0));
+    if (python_output.c_str()[1] == '1'){
+      matrix.drawPixel(0,1,matrix.Color333(7,0,0));
+      truck_color_1 = python_output.c_str()[2];
+    } else if (python_output.c_str()[1] == '2') {
+      truck_color_2 = python_output.c_str()[2];
+    } else if (python_output.c_str()[1] == '3') {
+      truck_color_3 = python_output.c_str()[2];
     } 
     
 
   } else {
-    sscanf(python_output.c_str(), "%2d,%2d", &tuple[0], &tuple[1]);
+      // Read in the next tuple of a person location
+      sscanf(python_output.c_str(), "%2d,%2d", &tuple[0], &tuple[1]);
 
-    pixels[num_people * 2] = tuple[0];  
-    pixels[num_people * 2+1] = tuple[1];
-    num_people += 1;
-    
-    // matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 0));
-    // If available, a green dot
-    matrix.drawPixel(12, 12, matrix.Color333(0, 7, 0));
-    // delay(10000);
-
-    // for (int i=0; i<num_people; i++){
-    //   PeopleBitMap[pixels[2*i]*64 + pixels[2*i+1]] = 0xFFFF;
-    // }
-    for (int i=0; i<num_people; i++) {
-      matrix.drawPixel(pixels[2*i], pixels[2*i+1], matrix.Color333(0, 7, 0));
-
-            // Define Boundaries
-      int x = 25;
-      int y1 = 9;
-      int y2 = 18;
-
-      // Define Time Increments
-      int time_inc = 1;
-
-      if (pixels[2*i] < x) {
-        continue;
-      } else if (pixels[2*i + 1] < y1 ) {
-        numbers[0] += time_inc;
-      } else if (pixels[2*i + 1] < y2 ) {
-        numbers[1] += time_inc;
-      } else if (pixels[2*i + 1] > y2){
-        numbers[2] += time_inc;
+      pixels[num_people * 2] = tuple[0];  
+      pixels[num_people * 2+1] = tuple[1];
+  
+      
+      // Update the waittimes
+      if (tuple[0] > x_boundary) {
+        if (tuple[1] < y1_boundary ) {
+          numbers[0] += time_inc;
+        } else if (tuple[1] < y2_boundary ) {
+          numbers[1] += time_inc;
+        } else if (tuple[1] > y2_boundary){
+          numbers[2] += time_inc;
+        }
       }
-    }
 
+      num_people += 1;
+      
+      for (int i=0; i<num_people; i++) {
+        matrix.drawPixel(pixels[2*i], pixels[2*i+1], matrix.Color333(0, 7, 0));
+        delay(20);
+      }
+
+  }
 
 
   }
 
   
-}
-
-
-// Input a value 0 to 24 to get a color value.
-// The colours are a transition r - g - b - back to r.
-uint16_t Wheel(byte WheelPos) {
-  if(WheelPos < 8) {
-   return matrix.Color333(7 - WheelPos, WheelPos, 0);
-  } else if(WheelPos < 16) {
-   WheelPos -= 8;
-   return matrix.Color333(0, 7-WheelPos, WheelPos);
-  } else {
-   WheelPos -= 16;
-   return matrix.Color333(WheelPos, 0, 7 - WheelPos);
-  }
-}

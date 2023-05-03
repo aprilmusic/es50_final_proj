@@ -12,7 +12,24 @@ import time
 # Load the two images
 img1 = Image.open('images/science_center1682444448.872606.png')
 img2 = Image.open('images/science_center1682444452.3114848.png')
-arduinoData = serial.Serial('/dev/cu.usbmodem101', 115200)
+arduinoData = serial.Serial('/dev/cu.usbmodem1101', 115200)
+
+
+def get_truck_prediction(truck_array, truck_number):
+    median_color = np.median(truck_array, axis=(0, 1))
+    print(median_color)
+    print(median_color - np.array([138., 187., 211.]))
+    if np.abs((median_color - np.array([138., 187., 211.])).sum()) < 100:
+        arduinoData.write(bytes(f"t{truck_number}b", 'utf-8'))
+        return f"truck{truck_number}blue"
+
+    if np.abs((median_color - np.array([171., 155., 143.])).sum()) < 100:
+        arduinoData.write(bytes(f"t{truck_number}y", 'utf-8'))
+        return f"truck{truck_number}yellow"
+
+    if np.abs((median_color - np.array([166., 139., 154.])).sum()) < 100:
+        arduinoData.write(bytes(f"t{truck_number}r", 'utf-8'))
+        return f"truck{truck_number}red"
 
 
 def get_people_pixels(img1, img2):
@@ -70,8 +87,10 @@ def get_people_pixels(img1, img2):
         time.sleep(1)
 
         arduinoData.write(bytes(f'{y[i]:02d},{x[i]:02d}', 'utf-8'))
-        print(f'{y[i]:02d},{x[i]:02d}')
+        # print(f'{y[i]:02d},{x[i]:02d}')
 
+    time.sleep(1)
+    arduinoData.write(bytes('new', 'utf-8'))
     # plt.show()
 
     return pixels
