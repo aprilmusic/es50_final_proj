@@ -65,7 +65,6 @@ void setup() {
   num_people = 0;
   memset(pixels,0,sizeof(pixels));
   
-
   // fill the screen with 'black'
   matrix.fillScreen(matrix.Color333(0, 0, 0));
   // matrix.drawPixel(16, 16, matrix.Color333(0, 7, 0));
@@ -73,17 +72,17 @@ void setup() {
 
   //matrix.drawPixel()
 
-// White Lines For Background
-matrix.drawLine(0, 12, 30, 32, matrix.Color333(3,3,3));
-matrix.drawLine(0, 17, 13, 32, matrix.Color333(3,3,3));
+  // White Lines For Background
+  matrix.drawLine(0, 12, 30, 32, matrix.Color333(3,3,3));
+  matrix.drawLine(0, 17, 13, 32, matrix.Color333(3,3,3));
 
-// fill circle
-matrix.fillCircle(1, 31, 2, matrix.Color333(2, 7, 2));
-matrix.fillCircle(1, 29, 2, matrix.Color333(0, 7, 0));
-matrix.fillCircle(1, 26, 2, matrix.Color333(1, 7, 1));
-matrix.fillCircle(3, 31, 2, matrix.Color333(0, 7, 0));
-matrix.fillCircle(0, 24, 1, matrix.Color333(4, 7, 4));
-matrix.fillCircle(0, 23, 2, matrix.Color333(0, 7, 0));
+  // fill circle
+  matrix.fillCircle(1, 31, 2, matrix.Color333(2, 7, 2));
+  matrix.fillCircle(1, 29, 2, matrix.Color333(0, 7, 0));
+  matrix.fillCircle(1, 26, 2, matrix.Color333(1, 7, 1));
+  matrix.fillCircle(3, 31, 2, matrix.Color333(0, 7, 0));
+  matrix.fillCircle(0, 24, 1, matrix.Color333(4, 7, 4));
+  matrix.fillCircle(0, 23, 2, matrix.Color333(0, 7, 0));
   }
   // matrix.setCursor(2, 8);    // next line
   // for (w=8; w<18; w++) {
@@ -127,7 +126,6 @@ void loop() {
     truck_color_1_matrix = matrix.Color333(3,3,3);    
   }
 
-  matrix.println(truck_color_1);
 
   matrix.drawLine(26, 16, 44, 19, truck_color_1_matrix);
   matrix.drawLine(26, 24, 44, 26, truck_color_1_matrix);
@@ -173,23 +171,23 @@ void loop() {
   matrix.setTextWrap(false); // Don't wrap at end of line - will do ourselves
 
 
-// Truck 1 Text
   matrix.fillRect(52, 0, 15, 32, matrix.Color333(0,0,0));
-  matrix.setCursor(52, 1);    // start at top left, with 8 pixel of spacing
-  matrix.setTextColor(truck_color_1_matrix);
-  matrix.println(numbers[0]);
 
+// Truck 1 Text
+  matrix.setCursor(52, 23);    // bottom left
+  matrix.setTextColor(truck_color_1_matrix);
+  matrix.println(numbers[2]);
 
 // Truck 2 Text
-  matrix.setCursor(52, 12);    // start at top left, with 8 pixel of spacing
+  matrix.setCursor(52, 12);    // center
   matrix.setTextColor(truck_color_2_matrix);
   matrix.println(numbers[1]);
   
 
-// Truck 3 Text
-  matrix.setCursor(52, 23);    // start at top left, with 8 pixel of spacing
+  // Truck 3 Text
+  matrix.setCursor(52, 1);    // start at top left, with 8 pixel of spacing
   matrix.setTextColor(truck_color_3_matrix);
-  matrix.println(numbers[2]);
+  matrix.println(numbers[0]);
  
 
   while (!Serial.available()) {
@@ -265,15 +263,16 @@ void loop() {
     numbers[0] = 0;
     numbers[1] = 0;
     numbers[2] = 0;
-    matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 7));
+    // Debugging pixel
+    // matrix.drawPixel(0, num_people, matrix.Color333(0, 0, 7));
     
     num_people = 0;
     
   } else if (python_output.c_str()[0] == 't') {
     // Truck colors are communicated here
-    matrix.drawPixel(0,0,matrix.Color333(7,0,0));
+    // matrix.drawPixel(0,0,matrix.Color333(7,0,0));
     if (python_output.c_str()[1] == '1'){
-      matrix.drawPixel(0,1,matrix.Color333(7,0,0));
+      // matrix.drawPixel(0,1,matrix.Color333(7,0,0));
       truck_color_1 = python_output.c_str()[2];
     } else if (python_output.c_str()[1] == '2') {
       truck_color_2 = python_output.c_str()[2];

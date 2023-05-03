@@ -13,10 +13,13 @@ from image_difference_processing import get_people_pixels, get_truck_prediction
 
 from passwords import GMAIL_USERNAME, GMAIL_PASSWORD
 
+# https://forum.arduino.cc/t/serial-input-basics/278284/2
+# http://www.gammon.com.au/serial
 
 if __name__ == "__main__":
 
-    options = {'ca_cert': 'ca.crt'}
+    # options = {'ca_cert': 'ca.crt'}
+    options = {}
     chrome_options = ChromeOptions()
     chrome_options.add_argument('--user-data-dir=hash')
     chrome_options.add_argument("--disable-gpu")
@@ -32,23 +35,26 @@ if __name__ == "__main__":
     # and therefore should not be committed to Github, but
     # DOUBLE CHECK THAT YOU ARE NOT COMMITTING YOUR GMAIL PASSWORD BEFORE YOU PUSH!!!!
 
-    # wait = WebDriverWait(browser, 10)
-    # browser.get('https://gmail.com')
-    # wait.until(ec.presence_of_element_located(
-    #     (By.XPATH, '//*[@id="identifierId"]'))).send_keys(GMAIL_USERNAME)
-    # wait.until(ec.presence_of_element_located(
-    #     (By.XPATH, '//*[@id="identifierNext"]/div/button'))).click()
-    # time.sleep(5)
-    # wait.until(ec.presence_of_element_located(
-    #     (By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input'))).send_keys(GMAIL_PASSWORD)
-    # wait.until(ec.presence_of_element_located(
-    #     (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
-    # time.sleep(30)
+    wait = WebDriverWait(browser, 10)
+    browser.get('https://gmail.com')
+    wait.until(ec.presence_of_element_located(
+        (By.XPATH, '//*[@id="identifierId"]'))).send_keys(GMAIL_USERNAME)
+    wait.until(ec.presence_of_element_located(
+        (By.XPATH, '//*[@id="identifierNext"]/div/button'))).click()
+    time.sleep(5)
+    wait.until(ec.presence_of_element_located(
+        (By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input'))).send_keys(GMAIL_PASSWORD)
+    wait.until(ec.presence_of_element_located(
+        (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
+    time.sleep(30)
 
     # It will ask you for your 2 factor authentication on your phone here.
 
     # Unlisted youtube video
-    browser.get('https://www.youtube.com/watch?v=QBKk4TQi9KU')
+    # browser.get('https://www.youtube.com/watch?v=QBKk4TQi9KU')
+
+    # Private youtube video
+    browser.get('https://www.youtube.com/watch?v=JIb4EGf5uFA')
 
     time.sleep(12)
     # Do initial truck processing
