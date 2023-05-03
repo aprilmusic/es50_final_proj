@@ -99,14 +99,6 @@ void setup() {
 
 
 
-void update_numbers() {
-  for (int i=0; i < num_people; i++){
-  
-            // Define Boundaries
-      
-}
-}
-
 
 
 void loop() {

@@ -35,26 +35,33 @@ if __name__ == "__main__":
     # and therefore should not be committed to Github, but
     # DOUBLE CHECK THAT YOU ARE NOT COMMITTING YOUR GMAIL PASSWORD BEFORE YOU PUSH!!!!
 
-    wait = WebDriverWait(browser, 10)
-    browser.get('https://gmail.com')
-    wait.until(ec.presence_of_element_located(
-        (By.XPATH, '//*[@id="identifierId"]'))).send_keys(GMAIL_USERNAME)
-    wait.until(ec.presence_of_element_located(
-        (By.XPATH, '//*[@id="identifierNext"]/div/button'))).click()
-    time.sleep(5)
-    wait.until(ec.presence_of_element_located(
-        (By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input'))).send_keys(GMAIL_PASSWORD)
-    wait.until(ec.presence_of_element_located(
-        (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
-    time.sleep(30)
+    # wait = WebDriverWait(browser, 10)
+    # browser.get('https://gmail.com')
+    # wait.until(ec.presence_of_element_located(
+    #     (By.XPATH, '//*[@id="identifierId"]'))).send_keys(GMAIL_USERNAME)
+    # wait.until(ec.presence_of_element_located(
+    #     (By.XPATH, '//*[@id="identifierNext"]/div/button'))).click()
+    # time.sleep(5)
+    # wait.until(ec.presence_of_element_located(
+    #     (By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input'))).send_keys(GMAIL_PASSWORD)
+    # wait.until(ec.presence_of_element_located(
+    #     (By.XPATH, '//*[@id="passwordNext"]/div/button'))).click()
+    # time.sleep(30)
 
     # It will ask you for your 2 factor authentication on your phone here.
 
     # Unlisted youtube video
-    # browser.get('https://www.youtube.com/watch?v=QBKk4TQi9KU')
+    browser.get('https://www.youtube.com/watch?v=QBKk4TQi9KU')
+    time.sleep(5)
+    wait = WebDriverWait(browser, 10)
+    wait.until(ec.presence_of_element_located(
+        (By.CLASS_NAME, "html5-video-player")
+    ))
+    video_player = browser.find_element(By.CLASS_NAME, "html5-video-player")
+    video_player.send_keys("f")
 
     # Private youtube video
-    browser.get('https://www.youtube.com/watch?v=JIb4EGf5uFA')
+    # browser.get('https://www.youtube.com/watch?v=JIb4EGf5uFA')
 
     time.sleep(12)
     # Do initial truck processing
@@ -86,7 +93,7 @@ if __name__ == "__main__":
     this_image_path = None
     image_array = []
 
-    for i in range(10):
+    while True:
         this_time = time.time()
         this_image_path = f'images/science_center_{time.time()}.png'
         browser.save_screenshot(this_image_path)

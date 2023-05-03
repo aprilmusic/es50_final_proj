@@ -10,10 +10,10 @@ import serial
 import time
 
 # Load the two images
-img1 = Image.open('images/science_center1682444448.872606.png')
-img2 = Image.open('images/science_center1682444452.3114848.png')
-img3 = Image.open('images/science_center1683060386.765471.png')
-background = Image.open('images/background_5-3.png')
+# img1 = Image.open('images/science_center1682444448.872606.png')
+# img2 = Image.open('images/science_center1682444452.3114848.png')
+# img3 = Image.open('images/science_center1683060386.765471.png')
+# background = Image.open('images/background_5-3.png')
 arduinoData = serial.Serial('/dev/cu.usbmodem1101', 115200)
 
 x_boundary = 25
@@ -149,7 +149,7 @@ def get_people_pixels(img1, img2):
 
     pixels = resize(people_components, (32, 52))
     x, y = np.where(pixels > 0.1)
-    coordinates = []
+
     print(x, y)
 
     for i in range(x.shape[0]):
